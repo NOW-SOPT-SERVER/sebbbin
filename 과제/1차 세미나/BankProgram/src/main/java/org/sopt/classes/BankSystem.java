@@ -11,8 +11,9 @@ public class BankSystem {
         this.customers = new HashMap<>();
         customerDatabase();
     }
+
     //미리 고객 정보 쌓아두기
-    private void customerDatabase(){
+    private void customerDatabase() {
         addCustomer("123", new Customer("123", 10000));
         addCustomer("456", new Customer("456", 15000));
         addCustomer("789", new Customer("789", 5000));

@@ -10,6 +10,7 @@ public class Customer {
         this.accountNumber = accountNumber;
         this.balance = initialBalance;
     }
+
     public int getBalance() {
         return balance;
     }
@@ -18,6 +19,7 @@ public class Customer {
         balance += amount;
 
     }
+
     public boolean withdraw(int amount) { //출금
         if (amount <= balance) {
             balance -= amount;

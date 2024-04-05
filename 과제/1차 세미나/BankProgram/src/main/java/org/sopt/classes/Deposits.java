@@ -5,20 +5,22 @@ import java.util.Scanner;
 public class Deposits {
     private Customer customer;
     private BankSystem bankSystem;
+
     public Deposits(Customer customer, BankSystem bankSystem) {
         this.customer = customer;
         this.bankSystem = bankSystem;
     }
+
     public void getUserInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("어떤 서비스를 원하시나요? (현재잔액확인/입금/출금/계좌이체): ");
         String serviceAction = scanner.nextLine();
 
         switch (serviceAction) {
-            case "현재잔액확인" :
+            case "현재잔액확인":
                 System.out.println("현재 잔액: " + customer.getBalance() + "원");
                 break;
-            case "입금" :
+            case "입금":
                 System.out.println("입금액을 입력해주세요: ");
                 int amount = scanner.nextInt();
                 customer.deposit(amount);
