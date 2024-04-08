@@ -1,4 +1,4 @@
-package org.sopt.practice.controller.dto;
+package org.sopt.practice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

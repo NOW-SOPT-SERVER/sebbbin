@@ -1,6 +1,6 @@
 package org.sopt.practice.controller;
 
-import org.sopt.practice.controller.dto.ApiResponse;
+import org.sopt.practice.dto.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
