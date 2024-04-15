@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController //Contorller라는 것을 알려주기 위해
 @RequiredArgsConstructor
@@ -20,6 +21,10 @@ public class MemberController {
     public ResponseEntity postMember(@RequestBody MemberCreateDto memberCreateDto)
     {
         return ResponseEntity.created(URI.create(memberService.createMember(memberCreateDto))).build();
+    }
+    @GetMapping("/list")
+    public ResponseEntity<List<MemberFindDto>> findMemberList() {
+        return ResponseEntity.ok(memberService.findMemberList());
     }
 
     //ResponseEntity는 generic타입을 넣을 수 있음

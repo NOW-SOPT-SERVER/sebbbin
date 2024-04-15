@@ -9,6 +9,9 @@ import org.sopt.practice.dto.MemberFindDto;
 import org.sopt.practice.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor //의존성 주입
 public class MemberService {
@@ -20,6 +23,13 @@ public class MemberService {
         Member member = memberRepository.save(Member.create(memberCreateDto.name(), memberCreateDto.part(), memberCreateDto.age()));
         return member.getId().toString();
     }
+    public List<MemberFindDto> findMemberList() {
+        // DB에서 멤버 리스트를 가져온 후 DTO로 변환
+        return memberRepository.findAll().stream()
+                .map(member -> new MemberFindDto(member.getName(),member.getPart(), member.getAge()))
+                .collect(Collectors.toList());
+    }
+
 
     public MemberFindDto findMemberById(Long memberId){
         return MemberFindDto.of(memberRepository.findById(memberId).orElseThrow(
