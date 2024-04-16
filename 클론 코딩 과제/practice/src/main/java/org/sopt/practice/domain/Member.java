@@ -13,18 +13,18 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private  String name;
+    private String name;
     private int age;
 
     //판매하는 아이템의 개수를 추가해줘도 좋을거같다.
 
     @Builder
-    public Member(String name, int age){
+    public Member(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
-    public static Member create(String name, int age){
+    public static Member create(String name, int age) {
         return Member.builder()
                 .name(name)
                 .age(age)

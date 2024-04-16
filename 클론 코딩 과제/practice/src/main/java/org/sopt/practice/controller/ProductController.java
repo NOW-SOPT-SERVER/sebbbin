@@ -17,8 +17,9 @@ public class ProductController {
 
     private final ProductService productService;
 
+    //판매할 상품을 등록하는 api
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody ProductAddDto productAddDto){
+    public ResponseEntity<Product> addProduct(@RequestBody ProductAddDto productAddDto) {
         return ResponseEntity.ok(productService.addProduct(productAddDto));
     }
 }
