@@ -22,10 +22,8 @@ public class MemberController {
     {
         return ResponseEntity.created(URI.create(memberService.createMember(memberCreateDto))).build();
     }
-    @GetMapping("/list")
-    public ResponseEntity<List<MemberFindDto>> findMemberList() {
-        return ResponseEntity.ok(memberService.findMemberList());
-    }
+
+
 
     //ResponseEntity는 generic타입을 넣을 수 있음
 
