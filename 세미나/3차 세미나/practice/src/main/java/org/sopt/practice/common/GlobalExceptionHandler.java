@@ -1,10 +1,9 @@
 package org.sopt.practice.common;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.sopt.practice.common.dto.ErrorMessage;
 import org.sopt.practice.common.dto.ErrorResponse;
 import org.sopt.practice.exception.NotFoundException;
-import org.sopt.practice.exception.UnauthorizedAccessException;
+import org.sopt.practice.exception.CustomizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,8 +26,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.of(ErrorMessage.MEMBER_NOT_FOUND_BY_ID_EXCEPTION));
     }
 
-    @ExceptionHandler(UnauthorizedAccessException.class)
-    public ResponseEntity<ErrorResponse> handleUnauthorizedAccessException(UnauthorizedAccessException e) {
+    @ExceptionHandler(CustomizedException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedAccessException(CustomizedException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse.of(ErrorMessage.UNAUTHORIZED_ACCESS));
     }
 
