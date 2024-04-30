@@ -17,11 +17,11 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/article")
-    public ResponseEntity<SuccessStatusResponse> writeArticle(@RequestHeader Long blogId,
+    @PostMapping("/post")
+    public ResponseEntity<SuccessStatusResponse> writeArticle(@RequestHeader Long blogId,@RequestHeader Long memberId,
                                                               @Valid @RequestBody PostCreateRequest postCreateRequest){
-        return ResponseEntity.status(HttpStatus.CREATED).header("Location", postService.write(blogId, postCreateRequest))
-                .body(SuccessStatusResponse.of(SuccessMessage.ARTICLE_WRITE_SUCCESS));
+        return ResponseEntity.status(HttpStatus.CREATED).header("Location", postService.write(blogId, memberId, postCreateRequest))
+                .body(SuccessStatusResponse.of(SuccessMessage.POST_CREATE_SUCCESS));
     }
 
 }
