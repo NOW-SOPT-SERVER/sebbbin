@@ -21,8 +21,8 @@ public class BlogController {
     //성공했을 때 값을 반환하기 위한 SuccessStatusResponse
     @PostMapping("/blog")
     public ResponseEntity<SuccessStatusResponse> creatBlog(@RequestHeader Long memberId,
-                                                           @RequestBody BlogCreateRequest blogCreateRequest){
-        return ResponseEntity.status(HttpStatus.CREATED).header("Location",blogService.create(memberId, blogCreateRequest))
+                                                           @RequestBody BlogCreateRequest blogCreateRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).header("Location", blogService.create(memberId, blogCreateRequest))
                 .body(SuccessStatusResponse.of(SuccessMessage.BLOG_CREATE_SUCCESS));
     }
 
@@ -30,7 +30,7 @@ public class BlogController {
     public ResponseEntity updateBlogTitle(
             @PathVariable Long blogId,
             @Valid @RequestBody BlogTitleUpdateRequest blogTitleUpdateRequest
-    ){
+    ) {
         blogService.updateTitle(blogId, blogTitleUpdateRequest);
         return ResponseEntity.noContent().build();
     }

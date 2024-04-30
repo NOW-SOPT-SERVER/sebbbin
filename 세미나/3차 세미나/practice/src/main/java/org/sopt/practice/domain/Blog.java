@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Blog extends BaseTimeEntity{
+public class Blog extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,15 +24,16 @@ public class Blog extends BaseTimeEntity{
 
     private String description;
 
-    private Blog(Member member, String title, String description){
+    private Blog(Member member, String title, String description) {
         this.member = member;
         this.title = title;
-        this.description= description;
+        this.description = description;
     }
 
-    public static Blog create(Member member, String title, String description){
+    public static Blog create(Member member, String title, String description) {
         return new Blog(member, title, description);
     }
+
     public void updateTitle(
             String title
     ) {
@@ -41,7 +42,6 @@ public class Blog extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> posts = new ArrayList<>();
-
 
 
 }

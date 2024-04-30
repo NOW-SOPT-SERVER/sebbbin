@@ -16,27 +16,28 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional //DB변경사항을 반영할 때 사용
-    public String createMember(MemberCreateDto memberCreateDto)
-    {
+    public String createMember(MemberCreateDto memberCreateDto) {
         Member member = memberRepository.save(Member.create(memberCreateDto.name(), memberCreateDto.part(), memberCreateDto.age()));
         return member.getId().toString();
     }
+
     public Member findById(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(
                 () -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND_BY_ID_EXCEPTION)
         );
     }
 
-    public MemberFindDto findMemberById(Long memberId){
+    public MemberFindDto findMemberById(Long memberId) {
         return MemberFindDto.of(memberRepository.findById(memberId).orElseThrow(
                 () -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND_BY_ID_EXCEPTION)
         ));
     }
+
     @Transactional //삭제도 DB변경사항 적용이라
     //아무것도 return 하지 않아서 void
-    public void deleteMemberById(Long memberId){
+    public void deleteMemberById(Long memberId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(()->  new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND_BY_ID_EXCEPTION));
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.MEMBER_NOT_FOUND_BY_ID_EXCEPTION));
         memberRepository.delete(member);
     }
 

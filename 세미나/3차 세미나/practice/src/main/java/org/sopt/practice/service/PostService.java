@@ -20,7 +20,7 @@ public class PostService {
     private final BlogService blogService;
     private final MemberService memberService;
 
-    public String writePost(Long blogId, Long memberId, PostCreateRequest postCreateRequest){
+    public String writePost(Long blogId, Long memberId, PostCreateRequest postCreateRequest) {
         // 블로그 소유권 검증
         blogService.validateBlogMember(blogId, memberId);
         // 글 생성 및 저장 로직
@@ -31,6 +31,7 @@ public class PostService {
         ));
         return post.toString();
     }
+
     public List<Post> findAllPostsByBlogId(Long blogId, Long memberId) {
         // 블로그 소유권 검증
         blogService.validateBlogMember(blogId, memberId);
@@ -41,7 +42,7 @@ public class PostService {
         return posts;
     }
 
-    public Post findPostById(Long blogId, Long memberId, Long postId){
+    public Post findPostById(Long blogId, Long memberId, Long postId) {
         // 블로그 소유권 검증
         blogService.validateBlogMember(blogId, memberId);
         // 특정 포스트 ID로 게시물 검색

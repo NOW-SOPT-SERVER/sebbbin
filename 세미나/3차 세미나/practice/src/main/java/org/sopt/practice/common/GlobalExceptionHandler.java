@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<ErrorResponse> handleEntityNotFoundException (NotFoundException e){
+    protected ResponseEntity<ErrorResponse> handleEntityNotFoundException(NotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.of(ErrorMessage.MEMBER_NOT_FOUND_BY_ID_EXCEPTION));
     }
 
@@ -31,4 +31,4 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse.of(ErrorMessage.UNAUTHORIZED_ACCESS));
     }
 
-    }
+}

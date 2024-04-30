@@ -17,20 +17,19 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity postMember(@RequestBody MemberCreateDto memberCreateDto)
-    {
+    public ResponseEntity postMember(@RequestBody MemberCreateDto memberCreateDto) {
         return ResponseEntity.created(URI.create(memberService.createMember(memberCreateDto))).build();
     }
 
     //ResponseEntity는 generic타입을 넣을 수 있음
 
     @GetMapping("/{memberId}")
-        public ResponseEntity<MemberFindDto> findMemberById(@PathVariable Long memberId){
-            return ResponseEntity.ok(memberService.findMemberById(memberId));
+    public ResponseEntity<MemberFindDto> findMemberById(@PathVariable Long memberId) {
+        return ResponseEntity.ok(memberService.findMemberById(memberId));
     }
 
     @DeleteMapping("/{memberId}")
-    public ResponseEntity deleteMemberById(@PathVariable Long memberId){
+    public ResponseEntity deleteMemberById(@PathVariable Long memberId) {
         memberService.deleteMemberById(memberId);
         return ResponseEntity.noContent().build();
     }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 
 @NoArgsConstructor
-public class Post extends BaseTimeEntity{
+public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +22,7 @@ public class Post extends BaseTimeEntity{
 
     private String content;
 
-    public static Post create(Blog blog,  String title, String content) {
+    public static Post create(Blog blog, String title, String content) {
         return new Post(blog, title, content);
     }
 
