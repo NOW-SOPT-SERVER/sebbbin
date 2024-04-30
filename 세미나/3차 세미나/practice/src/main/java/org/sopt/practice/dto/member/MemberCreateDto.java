@@ -1,4 +1,4 @@
-package org.sopt.practice.dto;
+package org.sopt.practice.dto.member;
 
 import org.sopt.practice.domain.Part;
 

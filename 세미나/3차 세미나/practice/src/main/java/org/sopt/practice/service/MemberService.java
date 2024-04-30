@@ -1,13 +1,11 @@
 package org.sopt.practice.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.sopt.practice.common.dto.ErrorMessage;
-import org.sopt.practice.common.dto.ErrorResponse;
 import org.sopt.practice.domain.Member;
-import org.sopt.practice.dto.MemberCreateDto;
-import org.sopt.practice.dto.MemberFindDto;
+import org.sopt.practice.dto.member.MemberCreateDto;
+import org.sopt.practice.dto.member.MemberFindDto;
 import org.sopt.practice.exception.NotFoundException;
 import org.sopt.practice.repository.MemberRepository;
 import org.springframework.stereotype.Service;

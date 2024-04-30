@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //엔티티 클래스
 @Entity
 @Getter
@@ -35,6 +38,10 @@ public class Blog extends BaseTimeEntity{
     ) {
         this.title = title;
     }
+
+    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Post> posts = new ArrayList<>();
+
 
 
 }

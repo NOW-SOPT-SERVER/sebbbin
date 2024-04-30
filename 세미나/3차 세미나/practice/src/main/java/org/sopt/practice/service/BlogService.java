@@ -1,13 +1,12 @@
 package org.sopt.practice.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.sopt.practice.common.dto.ErrorMessage;
 import org.sopt.practice.domain.Blog;
 import org.sopt.practice.domain.Member;
-import org.sopt.practice.dto.BlogCreateRequest;
-import org.sopt.practice.dto.BlogTitleUpdateRequest;
+import org.sopt.practice.dto.blog.BlogCreateRequest;
+import org.sopt.practice.dto.blog.BlogTitleUpdateRequest;
 import org.sopt.practice.exception.NotFoundException;
 import org.sopt.practice.repository.BlogRepository;
 import org.springframework.stereotype.Service;
