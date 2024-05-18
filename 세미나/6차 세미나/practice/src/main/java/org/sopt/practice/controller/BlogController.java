@@ -25,7 +25,7 @@ public class BlogController {
     //성공했을 때 값을 반환하기 위한 SuccessStatusResponse
     @PostMapping("/blog")
     public ResponseEntity createBlog(
-            BlogCreateRequest blogCreateRequest
+            @ModelAttribute BlogCreateRequest blogCreateRequest
     ) {
         return ResponseEntity.created(URI.create(blogService.create(
                 principalHandler.getUserIdFromPrincipal(), blogCreateRequest))).build();
