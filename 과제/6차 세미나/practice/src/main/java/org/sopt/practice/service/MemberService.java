@@ -76,28 +76,28 @@ public class MemberService {
         memberRepository.delete(member);
     }
 
-    @Transactional
-    public TokenDto login(MemberLoginRequest memberLoginRequest) {
-        // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
-        UsernamePasswordAuthenticationToken authenticationToken = memberLoginRequest.toAuthentication();
-
-        // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
-        //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
-        // 2. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenDto tokenDto = jwtTokenProvider.generateTokenDto(authentication);
-
-        // 3. RefreshToken 저장
-        RefreshToken refreshToken = RefreshToken.builder()
-                .key(authentication.getName())
-                .value(tokenDto.getRefreshToken())
-                .build();
-
-        refreshTokenRepository.save(refreshToken);
-
-        // 4. 토큰 발급
-        return tokenDto;
-    }
+//    @Transactional
+//    public TokenDto login(MemberLoginRequest memberLoginRequest) {
+//        // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
+//        UsernamePasswordAuthenticationToken authenticationToken = memberLoginRequest.toAuthentication();
+//
+//        // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
+//        //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
+//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+//
+//        // 2. 인증 정보를 기반으로 JWT 토큰 생성
+//        TokenDto tokenDto = jwtTokenProvider.generateTokenDto(authentication);
+//
+//        // 3. RefreshToken 저장
+//        RefreshToken refreshToken = RefreshToken.builder()
+//                .key(authentication.getName())
+//                .value(tokenDto.getRefreshToken())
+//                .build();
+//
+//        refreshTokenRepository.save(refreshToken);
+//
+//        // 4. 토큰 발급
+//        return tokenDto;
+//    }
 
 }

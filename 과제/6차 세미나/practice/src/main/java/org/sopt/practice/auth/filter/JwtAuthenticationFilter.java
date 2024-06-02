@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import static org.sopt.practice.common.jwt.JwtValidationType.VALID_JWT;
 
-
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

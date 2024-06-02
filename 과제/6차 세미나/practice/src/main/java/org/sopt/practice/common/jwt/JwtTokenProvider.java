@@ -3,18 +3,19 @@ package org.sopt.practice.common.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
+import org.sopt.practice.domain.Member;
 import org.sopt.practice.dto.TokenDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,10 +23,9 @@ import java.util.stream.Collectors;
 public class JwtTokenProvider {
 
     private static final String USER_ID = "userId";
-    private static final String AUTHORITIES_KEY = "auth";
-    private static final String BEARER_TYPE = "Bearer";
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
+
     private static final Long ACCESS_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L * 14;
+    private static final Long REFRESH_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L * 14;
 
     @Value("${jwt.secret}")
     private String JWT_SECRET;
@@ -34,10 +34,10 @@ public class JwtTokenProvider {
     public String issueAccessToken(final Authentication authentication) {
         return generateToken(authentication, ACCESS_TOKEN_EXPIRATION_TIME);
     }
-
     public String issueRefreshToken(Authentication authentication) {
-        return generateToken(authentication, REFRESH_TOKEN_EXPIRE_TIME);
+        return generateToken(authentication, REFRESH_TOKEN_EXPIRATION_TIME);
     }
+
     public String generateToken(Authentication authentication, Long tokenExpirationTime) {
         final Date now = new Date();
         final Claims claims = Jwts.claims()
@@ -51,34 +51,6 @@ public class JwtTokenProvider {
                 .setClaims(claims) // Claim
                 .signWith(getSigningKey()) // Signature
                 .compact();
-    }
-    public TokenDto generateTokenDto(Authentication authentication) {
-        // 권한들 가져오기
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
-
-        long now = (new Date()).getTime();
-
-        // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRATION_TIME);
-        String accessToken = Jwts.builder()
-                .setSubject(authentication.getName())       // payload "sub": "name"
-                .claim(AUTHORITIES_KEY, authorities)        // payload "auth": "ROLE_USER"
-                .setExpiration(accessTokenExpiresIn)        // payload "exp": 1516239022 (예시)
-                .signWith(getSigningKey(), SignatureAlgorithm.HS512)    // header "alg": "HS512", SecretKey 사용
-                .compact();
-
-        // Refresh Token 생성
-        String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS512)
-                .compact();
-
-        return TokenDto.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
     }
 
     private SecretKey getSigningKey() {
@@ -113,4 +85,5 @@ public class JwtTokenProvider {
         Claims claims = getBody(token);
         return Long.valueOf(claims.get(USER_ID).toString());
     }
+
 }

@@ -47,8 +47,8 @@ public class MemberController {
                 );
     }
 
-    @PostMapping("/members/login")
-    public ResponseEntity<TokenDto> login(@RequestBody MemberLoginRequest memberLoginRequest) {
-        return ResponseEntity.ok(memberService.login(memberLoginRequest));
-    }
+//    @PostMapping("/members/login")
+//    public ResponseEntity<TokenDto> login(@RequestBody MemberLoginRequest memberLoginRequest) {
+//        return ResponseEntity.ok(memberService.login(memberLoginRequest));
+//    }
 }
