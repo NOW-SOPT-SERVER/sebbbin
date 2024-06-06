@@ -6,13 +6,12 @@ import org.sopt.practice.auth.UserAuthentication;
 import org.sopt.practice.common.dto.ErrorMessage;
 import org.sopt.practice.common.jwt.JwtTokenProvider;
 import org.sopt.practice.domain.Member;
-import org.sopt.practice.domain.RefreshToken;
+import org.sopt.practice.domain.Token;
 import org.sopt.practice.dto.*;
 import org.sopt.practice.exception.NotFoundException;
+import org.sopt.practice.exception.UnauthorizedException;
 import org.sopt.practice.repository.MemberRepository;
-import org.sopt.practice.repository.RefreshTokenRepository;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.sopt.practice.repository.RedisTokenRepository;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,8 +25,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final RefreshTokenRepository refreshTokenRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final RedisTokenRepository redisTokenRepository;
 
     @Transactional
     public UserJoinResponse createMember(MemberCreateDto memberCreate) {
@@ -46,14 +45,26 @@ public class MemberService {
         String refreshToken = jwtTokenProvider.issueRefreshToken(
                 UserAuthentication.createUserAuthentication(memberId)
         );
+        redisTokenRepository.save(Token.of(memberId, refreshToken));
 
-        // Refresh Token 저장
-        RefreshToken refreshTokenEntity = RefreshToken.builder()
-                .key(memberId.toString())
-                .value(refreshToken)
-                .build();
-        refreshTokenRepository.save(refreshTokenEntity);
 
+        return UserJoinResponse.of(accessToken, refreshToken, memberId.toString());
+    }
+
+    @Transactional
+    public UserJoinResponse refreshToken(Long memberId) {
+        if(!redisTokenRepository.existsById(memberId.toString())){
+            throw new UnauthorizedException(ErrorMessage.MEMBER_NOT_FOUND_BY_ID_EXCEPTION);
+        }
+        findById(memberId);
+
+        String accessToken = jwtTokenProvider.issueAccessToken(
+                UserAuthentication.createUserAuthentication(memberId)
+        );
+        String refreshToken = jwtTokenProvider.issueRefreshToken(
+                UserAuthentication.createUserAuthentication(memberId)
+        );
+        redisTokenRepository.save(Token.of(memberId, refreshToken));
         return UserJoinResponse.of(accessToken, refreshToken, memberId.toString());
     }
 

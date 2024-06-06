@@ -86,4 +86,6 @@ public class JwtTokenProvider {
         return Long.valueOf(claims.get(USER_ID).toString());
     }
 
+
+
 }

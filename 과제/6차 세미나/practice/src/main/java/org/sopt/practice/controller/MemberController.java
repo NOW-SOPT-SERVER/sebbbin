@@ -1,6 +1,7 @@
 package org.sopt.practice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.sopt.practice.auth.PrincipalHandler;
 import org.sopt.practice.dto.*;
 import org.sopt.practice.service.MemberService;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.net.URI;
 public class MemberController {
 
     private final MemberService memberService;
+    private final PrincipalHandler principalHandler;
 
 //    @PostMapping
 //    public ResponseEntity postMember(@RequestBody MemberCreateDto memberCreateDto)
@@ -40,6 +42,17 @@ public class MemberController {
             @RequestBody MemberCreateDto memberCreate
     ) {
         UserJoinResponse userJoinResponse = memberService.createMember(memberCreate);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header("Location", userJoinResponse.userId())
+                .body(
+                        userJoinResponse
+                );
+    }
+    @PostMapping("/members/reissue")
+    public ResponseEntity<UserJoinResponse> refreshToken(){
+        UserJoinResponse userJoinResponse = memberService.refreshToken(
+                principalHandler.getUserIdFromPrincipal()
+        );
         return ResponseEntity.status(HttpStatus.CREATED)
                 .header("Location", userJoinResponse.userId())
                 .body(

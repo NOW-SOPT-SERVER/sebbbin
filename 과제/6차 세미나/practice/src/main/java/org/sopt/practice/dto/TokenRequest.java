@@ -1,4 +1,4 @@
 package org.sopt.practice.dto;
 
-public record TokenRequest(String refreshToken, String memberId) {
+public record TokenRequest(String refreshToken) {
 }
